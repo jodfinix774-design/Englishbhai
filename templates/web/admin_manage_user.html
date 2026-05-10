@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>Green Authority | RAJU HOST • Manage Server</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+
+    :root { 
+      --bg: #050505; 
+      --card: rgba(255, 255, 255, 0.03); 
+      --accent: #00e676;
+      --accent-dark: #00c853;
+      --blue: #00e676;
+      --border: rgba(255, 255, 255, 0.08);
+      --danger: #ff5e5e;
+      --success: #00e676;
+      --warning: #ffb347;
+      --glass: blur(20px) saturate(180%);
+      --text-main: #ffffff;
+      --text-muted: #a3e4c2;
+    }
+
+    body { 
+      margin: 0; font-family: 'Inter', sans-serif; 
+      background: var(--bg); color: var(--text-main);
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(0, 230, 118, 0.12), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(0, 200, 100, 0.1), transparent 40%);
+      min-height: 100vh;
+    }
+
+    .topbar { 
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 15px 20px; background: rgba(5, 5, 5, 0.85); 
+      backdrop-filter: var(--glass); border-bottom: 1px solid rgba(0, 230, 118, 0.2); 
+      position: sticky; top: 0; z-index: 100;
+    }
+
+    .back-btn { 
+      width: 40px; height: 40px; border-radius: 12px; 
+      display: flex; align-items: center; justify-content: center; 
+      border: 1px solid rgba(0, 230, 118, 0.3); cursor: pointer; transition: 0.2s;
+      background: rgba(0, 230, 118, 0.05); color: #00e676;
+    }
+    .back-btn:hover { background: #00e676; color: #0a0f0a; border-color: #00e676; }
+
+    .page-title { font-weight: 800; font-size: 16px; letter-spacing: -0.3px; background: linear-gradient(135deg, #b6ff00, #00e676); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .container { padding: 20px 15px; max-width: 800px; margin: auto; }
+
+    .user-header { 
+      text-align: center; margin-bottom: 30px; 
+      padding-bottom: 20px; border-bottom: 1px solid rgba(0, 230, 118, 0.2);
+    }
+    .user-avatar {
+        width: 70px; height: 70px; background: linear-gradient(135deg, #00e676, #00b248);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        font-size: 28px; font-weight: 900; margin: 0 auto 15px;
+        box-shadow: 0 0 25px rgba(0, 230, 118, 0.4);
+    }
+    .user-header h1 { font-size: 22px; font-weight: 900; margin: 0; }
+    .user-header p { color: var(--text-muted); font-size: 13px; margin-top: 5px; }
+
+    /* Server Card & Header - Green Theming */
+    .srv-card { 
+      background: var(--card); border-radius: 20px; padding: 20px; 
+      border: 1px solid rgba(0, 230, 118, 0.2);
+      margin-bottom: 20px;
+      transition: 0.3s ease;
+      backdrop-filter: blur(2px);
+    }
+    .srv-card:hover { border-color: #00e676; background: rgba(0, 230, 118, 0.05); }
+    
+    .srv-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+    
+    .srv-info { flex: 1; min-width: 0; }
+    .srv-info h3 { margin: 0; font-size: 17px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #b9fbc0; }
+    .srv-info h3 i { color: #00e676; margin-right: 6px; }
+    .srv-path { 
+        margin-top: 6px; font-size: 11px; color: #a0e0a8; 
+        background: rgba(0, 230, 118, 0.1); padding: 3px 8px; border-radius: 6px; 
+        display: inline-block; font-family: monospace;
+        border-left: 2px solid #00e676;
+    }
+
+    .status-badge { 
+      flex-shrink: 0;
+      padding: 6px 10px; border-radius: 12px; font-size: 10px; font-weight: 800; 
+      text-transform: uppercase; background: rgba(0, 230, 118, 0.08); color: var(--text-muted);
+      border: 1px solid rgba(0, 230, 118, 0.2); display: flex; align-items: center; gap: 5px;
+      min-width: 85px; justify-content: center;
+    }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #555; }
+    
+    .status-online { color: #00e676; background: rgba(0, 230, 118, 0.15); border-color: rgba(0, 230, 118, 0.4); }
+    .status-online .status-dot { background: #00e676; box-shadow: 0 0 8px #00e676; animation: pulse 2s infinite; }
+    
+    .status-suspended { color: #ff8c5a; background: rgba(255, 120, 60, 0.1); border-color: rgba(255, 140, 80, 0.3); }
+    .status-suspended .status-dot { background: #ff9f4a; }
+
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+    .action-grid { 
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; 
+    }
+
+    .btn { 
+      padding: 12px; border-radius: 12px; border: none; font-size: 12px; 
+      font-weight: 700; cursor: pointer; display: flex; align-items: center; 
+      justify-content: center; gap: 6px; transition: 0.2s;
+    }
+
+    .btn-login { background: rgba(0, 230, 118, 0.12); color: #a0ffc0; border: 1px solid rgba(0, 230, 118, 0.25); }
+    .btn-login:hover { background: rgba(0, 230, 118, 0.3); color: white; transform: translateY(-2px); }
+
+    .btn-files { background: rgba(255,255,255,0.05); color: #d0ffd0; border: 1px solid rgba(0, 230, 118, 0.2); }
+    .btn-files:hover { background: #00e67620; border-color: #00e676; }
+
+    .btn-start { background: rgba(0, 230, 118, 0.12); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.2); }
+    .btn-start:hover { background: #00e676; color: #0a0f0a; }
+
+    .btn-stop { background: rgba(255, 90, 70, 0.1); color: #ff8a7a; border: 1px solid rgba(255, 90, 70, 0.2); }
+    .btn-stop:hover { background: #ff5e4a30; }
+
+    .btn-suspend { background: rgba(255, 170, 60, 0.12); color: #ffb347; border: 1px solid rgba(255, 170, 60, 0.2); }
+    .btn-unsuspend { background: rgba(0, 230, 118, 0.15); color: #6eff8e; border: 1px solid rgba(0, 230, 118, 0.3); }
+
+    .destroy-zone { margin-top: 15px; border-top: 1px solid rgba(0, 230, 118, 0.25); padding-top: 12px; text-align: center; }
+    .btn-destroy { 
+      background: transparent; color: #888; font-size: 10px; 
+      font-weight: 700; cursor: pointer; border: none;
+    }
+    .btn-destroy:hover { color: #ff6b5c; text-shadow: 0 0 5px #ff5e5e; }
+
+    .empty-state { text-align: center; padding: 50px 0; color: var(--text-muted); }
+    .empty-state i { color: #00e676; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="back-btn" onclick="location.href='/admin/panel'">
+    <i class="fas fa-leaf"></i>
+  </div>
+  <div class="page-title"><i class="fas fa-seedling"></i> GREEN MANAGE | USER SERVERS</div>
+  <div style="width: 40px;"></div>
+</div>
+
+<div class="container">
+  
+  <div class="user-header animate__animated animate__fadeInDown">
+    <div class="user-avatar">{{ user.fname[0] }}</div>
+    <h1><i class="fas fa-user-check" style="color:#00e676;"></i> {{ user.fname }}</h1>
+    <p><i class="fas fa-envelope"></i> {{ user.email }}</p>
+  </div>
+
+  {% if servers %}
+    {% for s in servers %}
+    <div class="srv-card animate__animated animate__fadeInUp" id="card-{{ s.id }}">
+      
+      <div class="srv-header">
+        <div class="srv-info">
+          <h3><i class="fas fa-cube"></i> {{ s.name }}</h3>
+          <div class="srv-path"><i class="fas fa-folder-tree"></i> {{ s.folder }}</div>
+        </div>
+        
+        <div class="status-badge {% if s.status == 'suspended' %}status-suspended{% elif s.online %}status-online{% endif %}">
+          <span class="status-dot"></span>
+          <span class="text">
+            {% if s.status == 'suspended' %}☠️ SUSPENDED{% elif s.online %}🟢 ONLINE{% else %}⚫ OFFLINE{% endif %}
+          </span>
+        </div>
+      </div>
+
+      <div class="action-grid">
+        <button class="btn btn-login" onclick="location.href='/admin/login-as/{{ user.id }}'">
+          <i class="fas fa-mask"></i> Admin Access
+        </button>
+
+        <button class="btn btn-files" onclick="location.href='/admin/files/{{ s.folder }}'">
+          <i class="fas fa-folder-open"></i> File Manager
+        </button>
+
+        {% if s.status == 'suspended' %}
+        <button class="btn btn-unsuspend" onclick="toggleSuspension('{{ s.id }}', 'active')">
+          <i class="fas fa-play-circle"></i> Unsuspend
+        </button>
+        {% else %}
+        <button class="btn btn-suspend" onclick="toggleSuspension('{{ s.id }}', 'suspended')">
+          <i class="fas fa-pause-circle"></i> Suspend
+        </button>
+        {% endif %}
+
+        <button class="btn btn-stop" onclick="serverAction('{{ s.folder }}', 'stop')">
+          <i class="fas fa-skull-crosswalk"></i> Force Stop
+        </button>
+      </div>
+
+      <div class="destroy-zone">
+        <button class="btn-destroy" onclick="deleteServer('{{ s.id }}', '{{ s.folder }}')">
+          <i class="fas fa-trash-alt"></i> ⚡ DESTROY INSTANCE (IRREVERSIBLE)
+        </button>
+      </div>
+
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <i class="fas fa-seedling" style="font-size: 45px; margin-bottom: 20px;"></i>
+      <p>🌱 No active servers for this user. Create a new environment.</p>
+    </div>
+  {% endif %}
+
+</div>
+
+<script>
+  // Server Action (Stop Only - Green enforce)
+  async function serverAction(folder, act) {
+    Swal.fire({
+      title: '🟢 Stop Server?',
+      text: `This will force stop the server instance at ${folder}.`,
+      icon: 'warning',
+      background: '#0d1a0b',
+      color: '#ccffcb',
+      confirmButtonColor: '#00e676',
+      cancelButtonColor: '#555',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, stop'
+    }).then(async (result) => {
+      if(result.isConfirmed) {
+        const res = await fetch(`/server/action/${folder}/${act}`, { method: 'POST' });
+        const data = await res.json();
+        if(data.status === 'stopped' || data.status === 'ok') {
+          Swal.fire({ 
+            toast: true, position: 'top', icon: 'success', 
+            title: 'Server halted', showConfirmButton: false, timer: 1500,
+            background: '#0e2210', color: '#aaffaa' 
+          });
+          setTimeout(() => location.reload(), 1500);
+        } else {
+          Swal.fire('Error', data.msg || 'Unable to stop', 'error');
+        }
+      }
+    });
+  }
+
+  // Toggle Suspension refined with green style
+  async function toggleSuspension(srvId, newStatus) {
+    const actionText = newStatus === 'suspended' ? 'Suspend' : 'Unsuspend';
+    const msgText = newStatus === 'suspended' ? "User access to this server will be blocked ☠️" : "Server will be fully restored 🟢";
+    
+    const confirm = await Swal.fire({
+      title: `${actionText} Server?`,
+      text: msgText,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#00e676',
+      background: '#111b10',
+      color: '#e0ffe0',
+      confirmButtonText: `Yes, ${actionText}`
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        const res = await fetch(`/admin/suspend-server/${srvId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+        const data = await res.json();
+        
+        if (data.status === 'success') {
+          Swal.fire({
+            icon: 'success', title: 'Updated',
+            toast: true, position: 'top', showConfirmButton: false, timer: 1100,
+            background: '#1a2a18'
+          });
+          setTimeout(() => location.reload(), 1100);
+        } else {
+          Swal.fire('Error', 'Operation failed', 'error');
+        }
+      } catch (e) {
+        Swal.fire('Connection Error', 'API unreachable', 'error');
+      }
+    }
+  }
+
+  // Delete Server with double confirmation & green warning
+  async function deleteServer(id, folder) {
+    const confirm = await Swal.fire({
+      title: '☠️ PERMANENT DELETION',
+      text: `This will wipe ALL data of ${folder} forever. No recovery.`,
+      icon: 'error',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#2c6e2c',
+      background: '#130e0a',
+      color: '#fff0e0',
+      confirmButtonText: 'Destroy Forever'
+    });
+
+    if (confirm.isConfirmed) {
+      const res = await fetch(`/admin/delete-server/${id}`, { method: 'POST' });
+      const data = await res.json();
+      if(data.status === 'deleted') {
+        Swal.fire('Removed', 'Server environment deleted.', 'success');
+        location.reload();
+      } else {
+        Swal.fire('Error', 'Could not delete instance', 'error');
+      }
+    }
+  }
+  
+  // additional floating effect to match green ethos
+  const style = document.createElement('style');
+  style.textContent = `
+    ::selection { background: #00e676; color: #050505; }
+    .btn, .back-btn { transition: all 0.2s ease; }
+    .srv-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .srv-card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,230,118,0.1); }
+  `;
+  document.head.appendChild(style);
+</script>
+
+</body>
+</html>

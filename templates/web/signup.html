@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>GREEN SIGNUP | RAJU HOST • EMERALD</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+    :root { 
+      --bg: #0a1208; 
+      --card: rgba(18, 35, 18, 0.7); 
+      --accent: #00e676; 
+      --accent-dark: #00c853;
+      --border: rgba(0, 230, 118, 0.25); 
+      --text-main: #e2ffe2;
+      --text-dim: #b3ffb3;
+      --glass: blur(14px);
+    }
+
+    * { box-sizing: border-box; outline: none; }
+
+    body { 
+        margin: 0; 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        background: var(--bg); 
+        color: var(--text-main);
+        background-image: 
+            radial-gradient(circle at 0% 0%, rgba(0, 230, 118, 0.12) 0%, transparent 45%),
+            radial-gradient(circle at 100% 100%, rgba(0, 200, 100, 0.1) 0%, transparent 45%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .signup-box {
+        background: var(--card);
+        backdrop-filter: var(--glass);
+        padding: 30px;
+        border-radius: 28px;
+        border: 1px solid rgba(0, 230, 118, 0.3);
+        width: 100%;
+        max-width: 480px;
+        box-shadow: 0 25px 55px rgba(0, 30, 0, 0.5);
+    }
+
+    .logo-area { text-align: center; margin-bottom: 25px; }
+    .logo-icon { 
+        background: linear-gradient(135deg, #00e676, #009624); 
+        width: 50px; height: 50px; border-radius: 16px; 
+        display: inline-flex; align-items: center; justify-content: center; color: #0a1f0a;
+        margin-bottom: 12px; font-size: 22px;
+        box-shadow: 0 0 20px rgba(0, 230, 118, 0.4);
+    }
+
+    h2 { margin: 0; font-weight: 800; letter-spacing: -1px; background: linear-gradient(135deg, #ccffcc, #00e676); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    p { color: var(--text-dim); font-size: 13px; margin-top: 5px; }
+
+    .form-group { margin-bottom: 16px; text-align: left; }
+    .form-group label { display: block; font-size: 11px; font-weight: 800; color: #aaffaa; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+        width: 100%;
+        padding: 12px 15px;
+        background: rgba(0, 230, 118, 0.06);
+        border: 1px solid rgba(0, 230, 118, 0.25);
+        border-radius: 14px;
+        color: #e2ffe2;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    input:focus { border-color: var(--accent); background: rgba(0, 230, 118, 0.1); box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.2); }
+
+    .file-input-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+    }
+    .file-btn {
+        background: rgba(0, 230, 118, 0.06);
+        border: 1px dashed rgba(0, 230, 118, 0.4);
+        padding: 11px;
+        border-radius: 14px;
+        width: 100%;
+        color: #b0ffb0;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: 0.2s;
+    }
+    .file-btn:hover { background: rgba(0, 230, 118, 0.12); border-color: #00e676; }
+
+    .btn-signup {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #00e676, #009624);
+        color: #0a1a08;
+        border: none;
+        border-radius: 16px;
+        font-weight: 800;
+        font-size: 15px;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 8px 20px rgba(0, 230, 118, 0.3);
+    }
+    .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0, 230, 118, 0.45); filter: brightness(1.05); }
+    .btn-signup:active { transform: translateY(0); }
+
+    .footer-text { text-align: center; margin-top: 22px; font-size: 13px; color: #8fbf8f; }
+    .footer-text a { color: #00e676; text-decoration: none; font-weight: 800; transition: 0.2s; }
+    .footer-text a:hover { text-shadow: 0 0 6px #00e676; }
+
+    /* Green Alert */
+    .swal2-green-custom {
+        background: rgba(10, 30, 8, 0.95) !important;
+        backdrop-filter: blur(20px) !important;
+        border-radius: 24px !important;
+        border: 1px solid rgba(0, 230, 118, 0.5) !important;
+        color: #dcffdc !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="signup-box animate__animated animate__fadeInUp">
+    <div class="logo-area">
+        <div class="logo-icon"><i class="fas fa-seedling"></i></div>
+        <h2>Join Green Ecosystem</h2>
+        <p><i class="fas fa-leaf"></i> RAJU HOST • Emerald Tier</p>
+    </div>
+
+    <form id="signupForm" enctype="multipart/form-data">
+        <div class="input-row">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> First Name</label>
+                <input type="text" name="fname" placeholder="John" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-user-friends"></i> Last Name</label>
+                <input type="text" name="lname" placeholder="Doe" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fas fa-tag"></i> Username</label>
+            <input type="text" name="username" placeholder="johndoe123" required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fas fa-envelope"></i> Email Address</label>
+            <input type="email" name="email" placeholder="hello@greenhost.com" required>
+        </div>
+
+        <div class="input-row">
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-check-circle"></i> Confirm</label>
+                <input type="password" name="confirm_password" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fas fa-camera"></i> Profile Avatar (Optional)</label>
+            <div class="file-input-wrapper">
+                <input type="file" name="pfp" id="pfp" accept="image/*" style="display: none;" onchange="updateFileName(this)">
+                <div class="file-btn" onclick="document.getElementById('pfp').click()" id="file-label">
+                    <i class="fas fa-cloud-upload-alt"></i> Upload your photo
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-signup" id="submitBtn">
+            <i class="fas fa-tree"></i> REGISTER NOW
+        </button>
+    </form>
+
+    <div class="footer-text">
+        ☠️ Already sprouted? <a href="/login">Login to Dashboard</a>
+    </div>
+</div>
+
+<script>
+function updateFileName(input) {
+    const label = document.getElementById('file-label');
+    if (input.files.length > 0) {
+        label.innerHTML = `<i class="fas fa-check-circle"></i> ${input.files[0].name}`;
+        label.style.borderColor = '#00e676';
+        label.style.color = '#ccffcc';
+        label.style.background = 'rgba(0, 230, 118, 0.1)';
+    } else {
+        label.innerHTML = `<i class="fas fa-cloud-upload-alt"></i> Upload your photo`;
+        label.style.borderColor = 'rgba(0, 230, 118, 0.4)';
+        label.style.background = 'rgba(0, 230, 118, 0.06)';
+    }
+}
+
+document.getElementById('signupForm').onsubmit = async (e) => {
+    e.preventDefault();
+    
+    // Password match validation (client side)
+    const password = document.querySelector('input[name="password"]').value;
+    const confirm = document.querySelector('input[name="confirm_password"]').value;
+    
+    if (password !== confirm) {
+        Swal.fire({
+            title: '☠️ Password Mismatch',
+            text: 'Your passwords do not match. Please re-enter.',
+            icon: 'error',
+            background: '#122010',
+            color: '#ffddc0',
+            confirmButtonColor: '#00e676',
+            customClass: { popup: 'swal2-green-custom' }
+        });
+        return;
+    }
+    
+    if (password.length < 6) {
+        Swal.fire({
+            title: 'Weak Password',
+            text: 'Password must be at least 6 characters.',
+            icon: 'warning',
+            background: '#122010',
+            color: '#ffddc0',
+            confirmButtonColor: '#00e676',
+            customClass: { popup: 'swal2-green-custom' }
+        });
+        return;
+    }
+    
+    const formData = new FormData(e.target);
+    const btn = document.getElementById('submitBtn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> CREATING ACCOUNT...';
+    btn.disabled = true;
+
+    try {
+        const response = await fetch('/signup', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            Swal.fire({
+                title: '🌱 Welcome Aboard!',
+                text: result.msg || 'Your green account has been created. Redirecting...',
+                icon: 'success',
+                background: '#0e1f0c',
+                color: '#d4ffd4',
+                confirmButtonColor: '#00e676',
+                timer: 2500,
+                customClass: { popup: 'swal2-green-custom' }
+            }).then(() => {
+                window.location.href = result.url || '/dashboard';
+            });
+        } else {
+            Swal.fire({
+                title: '☠️ Signup Error',
+                text: result.msg || 'Could not create account. Email may already exist.',
+                icon: 'error',
+                background: '#1a1f16',
+                color: '#ffddb0',
+                confirmButtonColor: '#00e676',
+                customClass: { popup: 'swal2-green-custom' }
+            });
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Signup Error:', error);
+        Swal.fire({
+            title: 'Connection Error',
+            text: 'Unable to reach the green server. Please try again.',
+            icon: 'error',
+            background: '#1a1f16',
+            color: '#ffddb0',
+            confirmButtonColor: '#00e676',
+            customClass: { popup: 'swal2-green-custom' }
+        });
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+};
+</script>
+
+</body>
+</html>
