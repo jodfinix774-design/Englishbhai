@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <title>RAJU HOST | EMERALD EDITION</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #00e676;
+            --accent-glow: rgba(0, 230, 118, 0.4);
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-sec: #a1a1a6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Matrix Background Canvas - Green Theme */
+        #matrix {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.2;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 8%; background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 100;
+            border-bottom: 0.5px solid var(--border);
+        }
+
+        .logo {
+            font-size: 22px; font-weight: 800; letter-spacing: -1px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .logo i { color: var(--accent); filter: drop-shadow(0 0 8px var(--accent-glow)); }
+
+        /* Small & Compact Login Button */
+        .btn-login {
+            background: var(--accent); color: #0a0f0a; padding: 8px 18px;
+            border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 13px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px var(--accent-glow);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .btn-login:active { transform: scale(0.9); }
+        .btn-login:hover { transform: translateY(-2px); background: #00c853; box-shadow: 0 8px 22px var(--accent-glow); }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 120px 5% 60px; }
+        .hero h1 { font-size: clamp(35px, 8vw, 60px); margin-bottom: 20px; font-weight: 800; line-height: 1.1; }
+        .hero span { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
+        .hero p { color: var(--text-sec); font-size: 18px; max-width: 650px; margin: 0 auto 40px; }
+
+        /* Advanced Main Buttons */
+        .main-btns { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        
+        .btn-main {
+            padding: 15px 35px; border-radius: 15px; text-decoration: none; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 10px; transition: 0.4s;
+            border: 1px solid var(--border); position: relative; overflow: hidden;
+        }
+        
+        .btn-primary { background: var(--accent); color: #0a0f0a; border: none; box-shadow: 0 10px 25px var(--accent-glow); }
+        .btn-secondary { background: var(--glass); color: white; backdrop-filter: blur(10px); border: 1px solid rgba(0, 230, 118, 0.4); }
+
+        .btn-main:hover { transform: translateY(-5px); }
+        .btn-primary:hover { background: #00c853; box-shadow: 0 18px 35px var(--accent-glow); }
+        .btn-secondary:hover { border-color: var(--accent); background: rgba(0, 230, 118, 0.1); }
+        .btn-main::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: rgba(255,255,255,0.1); transform: rotate(45deg); transition: 0.5s;
+        }
+        .btn-main:active { transform: scale(0.95); }
+
+        /* Features Section */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding: 60px 8%; }
+        .card {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 40px; border-radius: 28px; transition: 0.5s;
+            text-align: left; overflow: hidden;
+        }
+        .card:hover { 
+            border-color: var(--accent); transform: translateY(-10px) scale(1.02);
+            background: rgba(0, 230, 118, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 230, 118, 0.15);
+        }
+        .card i { font-size: 38px; color: var(--accent); margin-bottom: 25px; transition: 0.5s; }
+        .card:hover i { transform: rotateY(360deg) scale(1.05); text-shadow: 0 0 12px var(--accent-glow); }
+
+        /* Contact Section - Green Accent */
+        .contact {
+            text-align: center; padding: 80px 8%;
+            background: linear-gradient(180deg, transparent, rgba(0, 230, 118, 0.05));
+            margin: 40px 8%; border-radius: 35px; border: 1px solid rgba(0, 230, 118, 0.25);
+        }
+        .contact .btn-primary { background: var(--accent); color: #0a0f0a; font-weight: 800; }
+
+        footer { text-align: center; padding: 50px; color: var(--text-sec); font-size: 13px; border-top: 1px solid var(--border); }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Scroll Animation Utility */
+        .reveal { visibility: hidden; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .btn-main { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+
+    <nav>
+        <div class="logo animate__animated animate__fadeInLeft">
+            <i class="fas fa-seedling"></i> RAJU=HOST<span style="color:#00e676;">PRO</span>
+        </div>
+        <div class="animate__animated animate__fadeInRight">
+            <a href="/login" class="btn-login"><i class="fas fa-sign-in-alt"></i> ACCESS PANEL</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1 class="reveal">Emerald <span>Python Bot</span> Core</h1>
+        <p class="reveal">Green-powered infrastructure for Telegram, Discord, and AI bots — extreme speed, zero lag, fortified security.</p>
+        <div class="main-btns reveal">
+            <a href="/login" class="btn-main btn-primary">
+                <i class="fas fa-bolt"></i> Launch Console
+            </a>
+            <a href="https://t.me/rxrajuahmmed" class="btn-main btn-secondary" target="_blank">
+                <i class="fab fa-telegram"></i> Admin Contact
+            </a>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="card reveal">
+            <i class="fab fa-python"></i>
+            <h3>Python Ultra-Optimized</h3>
+            <p>Native green threading, asynchronous event loops, and AI-ready dependency management for your bots.</p>
+        </div>
+        <div class="card reveal">
+            <i class="fas fa-tachometer-alt"></i>
+            <h3>Verdant Turbo Resources</h3>
+            <p>NVMe M.2 storage & dedicated DDR5 RAM — ensures lag-free execution, even under massive spikes.</p>
+        </div>
+        <div class="card reveal">
+            <i class="fas fa-shield-virus"></i>
+            <h3>Emerald DDoS Shield</h3>
+            <p>Multi-layer greenwall protection + intelligent rate limiting for 99.99% uptime guarantee.</p>
+        </div>
+    </div>
+
+    <div class="contact reveal">
+        <h2><i class="fas fa-headset" style="color:#00e676;"></i> 24/7 Green Support</h2>
+        <p style="margin-bottom: 30px; color: var(--text-sec);">Need instant setup? Our dev admins are ready to help you deploy any Python bot architecture.</p>
+        <a href="https://t.me/rxrajuahmmed" class="btn-main btn-primary" target="_blank" style="padding: 12px 40px;">
+            <i class="fab fa-telegram"></i> Message Admin Now
+        </a>
+    </div>
+
+    <footer>
+        ☠️ 2025 RAJU=HOST | GREEN INFRASTRUCTURE BY RAJU-ADMIN / SHIHAB ADVANCED | <i class="fas fa-leaf" style="color:#00e676;"></i> ECO-BOT READY
+    </footer>
+
+    <script>
+        // --- 1. Matrix Animation - Emerald code rain (greenish hex values)---
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        // using green-dominant character set
+        const letters = "01GREENPYTHONBOTEMERALD";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            // fade effect to create trail
+            ctx.fillStyle = 'rgba(0, 5, 0, 0.07)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00e676';
+            ctx.shadowBlur = 0;
+            ctx.font = fontSize + 'px "Fira Code", monospace';
+            for (let i = 0; i < drops.length; i++) {
+                // choose random char from letters string
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                // vary brightness - fallback to bright green
+                ctx.fillStyle = Math.random() > 0.8 ? '#88ffaa' : '#00e676';
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 55);
+
+        // --- 2. Enhanced Scroll Reveal with green accent ---
+        ScrollReveal().reveal('.reveal', {
+            distance: '50px',
+            duration: 1100,
+            easing: 'cubic-bezier(0.2, 0.9, 0.4, 1.1)',
+            interval: 180,
+            origin: 'bottom',
+            reset: false,
+            afterReveal: (el) => {
+                el.style.visibility = 'visible';
+            }
+        });
+
+        // --- 3. Haptic feedback & glowing click effect green edition ---
+        document.querySelectorAll('.btn-main, .btn-login').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if(window.navigator.vibrate) window.navigator.vibrate(12);
+                // create tiny green ripple
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.backgroundColor = '#00e676';
+                ripple.style.borderRadius = '50%';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.width = '8px';
+                ripple.style.height = '8px';
+                ripple.style.transform = 'scale(1)';
+                ripple.style.opacity = '0.8';
+                ripple.style.transition = 'transform 0.4s, opacity 0.5s';
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                btn.style.position = 'relative';
+                btn.style.overflow = 'hidden';
+                btn.appendChild(ripple);
+                setTimeout(() => {
+                    ripple.style.transform = 'scale(20)';
+                    ripple.style.opacity = '0';
+                    setTimeout(() => ripple.remove(), 400);
+                }, 10);
+            });
+        });
+
+        // Additional live matrix resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // reset drops array based on new width
+            const newCols = Math.floor(canvas.width / fontSize);
+            while(drops.length > newCols) drops.pop();
+            while(drops.length < newCols) drops.push(1);
+        });
+        
+        // micro dynamic title animation - subtle green vibe
+        let originalTitle = document.title;
+        let count = 0;
+        setInterval(() => {
+            if (document.hidden) return;
+            count++;
+            if (count % 6 === 0) {
+                document.title = "💚 RAJU HOST • GREEN ACTIVE 💚";
+                setTimeout(() => { document.title = originalTitle; }, 800);
+            }
+        }, 4000);
+    </script>
+</body>
+</html>
